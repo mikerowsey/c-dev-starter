@@ -83,4 +83,11 @@
     },
     {
       "name": "clang-release-build",
-      "configurePreset":
+      "configurePreset": "clang-release"
+    },
+    {
+      "name": "clang-asan-ubsan-build",
+      "configurePreset": "clang-asan-ubsan"
+    }
+  ]
+}
