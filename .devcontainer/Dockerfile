@@ -24,11 +24,10 @@ RUN apt-get update && apt-get install -y \
     unzip \
     tree \
     pkg-config \
-    zsh \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Dev container user with zsh as default shell
-RUN useradd -m -s /usr/bin/zsh vscode && \
+RUN useradd -m -s /bin/bash vscode && \
     usermod -aG sudo vscode && \
     echo "vscode ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
