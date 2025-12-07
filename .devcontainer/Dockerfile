@@ -2,6 +2,7 @@ FROM ubuntu:24.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 
+# Core toolchain + debuggers + analysis tools + QoL utilities
 RUN apt-get update && apt-get install -y \
     build-essential \
     clang \
@@ -12,9 +13,20 @@ RUN apt-get update && apt-get install -y \
     cmake \
     ninja-build \
     gdb \
+    valgrind \
+    strace \
+    lsof \
+    vim \
     git \
+    curl \
+    wget \
+    zip \
+    unzip \
+    tree \
+    pkg-config \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
+# Dev container user with bash as default shell
 RUN useradd -m -s /bin/bash vscode && \
     usermod -aG sudo vscode && \
     echo "vscode ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
