@@ -2,7 +2,7 @@ FROM ubuntu:24.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Core toolchain + debuggers + analysis tools + QoL utilities
+# Core toolchain + debuggers + analysis tools + QoL utilities + zsh
 RUN apt-get update && apt-get install -y \
     build-essential \
     clang \
@@ -24,12 +24,19 @@ RUN apt-get update && apt-get install -y \
     unzip \
     tree \
     pkg-config \
+    zsh \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Dev container user with bash as default shell
-RUN useradd -m -s /bin/bash vscode && \
+# Dev container user with zsh as default shell
+RUN useradd -m -s /usr/bin/zsh vscode && \
     usermod -aG sudo vscode && \
     echo "vscode ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
 USER vscode
 WORKDIR /workspace
+
+# Bake in your dotfiles-basic repo and run bootstrap
+RUN git clone https://github.com/mikerowsey/dotfiles-basic.git ~/.dotfiles-basic && \
+    cd ~/.dotfiles-basic && \
+    chmod +x bootstrap.sh && \
+    ./bootstrap.sh
